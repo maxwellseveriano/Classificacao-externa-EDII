@@ -32,10 +32,10 @@ int* le_registros(FILE *fp) {
 void selecao_por_substituicao(FILE *in) {
     int *registros_atuais = le_registros(in);
     int registros_congelados[M] = {0};
-    char f_nome[24] = "Particoes/particao0.txt";
+    char f_nome[24] = "Particoes/particao0.bin";
 
     gera_nome_particao(f_nome);
-    FILE *fp_particao = fopen(f_nome, "w+");
+    FILE *fp_particao = fopen(f_nome, "w+b");
     
     if (fp_particao == NULL) {
         printf("Falha ao criar uma particao\n");
@@ -79,7 +79,7 @@ void selecao_por_substituicao(FILE *in) {
             if (acabouLeitura) {
                 registros_congelados[indice_do_menor] = -1;
             }
-            fprintf(fp_particao, "%d ", menor_registro);
+            fwrite(&menor_registro, sizeof(int), 1,  fp_particao);
             ultimo_registro = menor_registro;
             adcionouNaParticao = 1;
             novaParticao = 0;
@@ -95,7 +95,7 @@ void selecao_por_substituicao(FILE *in) {
         indice_do_menor = idice_menor(registros_atuais, registros_congelados);
         menor_registro = registros_atuais[indice_do_menor];
 
-        fprintf(fp_particao, "%d ", menor_registro);
+        fwrite(&menor_registro, sizeof(int), 1,  fp_particao);
         registros_congelados[indice_do_menor] = -1;
     }
 }

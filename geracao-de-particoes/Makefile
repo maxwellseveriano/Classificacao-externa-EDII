@@ -5,7 +5,7 @@ test:	clean
 		./main
 
 clean:	
-		rm Particoes/*
+		rm -f Particoes/*
 
 run: 	clean test
 
