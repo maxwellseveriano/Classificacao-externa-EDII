@@ -46,7 +46,7 @@ void selecao_por_substituicao(FILE *in) {
     int menor_registro = registros_atuais[indice_do_menor];
     
     fread(&novo_registro, sizeof(int), 1, in);
-    fprintf(fp_particao, "%d ", menor_registro);
+    fread(&menor_registro, sizeof(int), 1, fp_particao);
     int ultimo_registro = menor_registro;
     
     registros_atuais[indice_do_menor] = novo_registro;
