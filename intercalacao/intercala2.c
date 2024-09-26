@@ -6,7 +6,7 @@ typedef struct No {
     struct No *esq;
     struct No *dir;
     struct No* pai;
-
+    //Vamos ver se vai
     
 } No;
 
