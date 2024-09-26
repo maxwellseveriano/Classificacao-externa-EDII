@@ -44,9 +44,9 @@ int main() {
     // }
 }
 
-// for(int i = 0; i< 5; i++) {
-//     printf("%d\n", jogadores[i]);
-// }
+ for(int i = 0; i< 5; i++) {
+     printf("%d\n", jogadores[i]);
+ }
 
 vencedor = arvore_de_vencedores(jogadores, folhas, 5);
 printf("Vencedor: %d\n", vencedor);
@@ -70,7 +70,6 @@ int arvore_de_vencedores(int jogadores[], int folhas[], int n) {
 
 
     for(int k = (2 * n) - 1; k > 0; k--) {
-
         folhas[k-1] = (folhas[k] < folhas[k - 1] ? folhas[k] : folhas[k - 1]);
     }
     
