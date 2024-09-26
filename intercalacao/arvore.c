@@ -1,14 +1,6 @@
 #include<stdio.h>
 #include<stdlib.h>
-
-typedef struct No {
-    int dado;
-    struct No *esq;
-    struct No *dir;
-    struct No* pai;
-    //Vamos ver se vai
-    
-} No;
+#include "arvore.h"
 
 No *criaRaiz(int dado) {
 
@@ -43,16 +35,3 @@ void criaNoDir(int dado, No *raiz) {
 }
 
 
-int main() {
-
-    No *nozinho = criaRaiz(__INT_MAX__);
-    criaNoDir(10, nozinho);
-    criaNoEsq(5, nozinho);
-
-    printf("%d\n", nozinho->dado);
-    printf("%d\n", nozinho->esq->dado);
-    printf("%d\n", nozinho->dir->dado);
-
-
-
-}

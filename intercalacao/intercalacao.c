@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include<stdlib.h>
+#include "arvore.h"
 
 typedef struct Cliente {
     int codCliente;
@@ -15,7 +16,8 @@ int arvore_de_vencedores(int jogadores[], int arvore[], int n);
 
 int main() {
 
-    int aux = 0, vencedor = 0; 
+    int vencedor = 0, menor = 0;
+    No *aux; 
 
     int jogadores[100], folhas[100];
 
@@ -28,7 +30,7 @@ int main() {
         FILE *fp_particao = fopen(f_nome, "rb");
 
         if(fp_particao == NULL) {
-        printf("Deu ruim");
+            exit(1);
     }
 
     printf("Valores lido do arquivo %s: \n", f_nome);
@@ -44,16 +46,34 @@ int main() {
     // }
 }
 
- for(int i = 0; i< 5; i++) {
-     printf("%d\n", jogadores[i]);
+ for(int i = 0; i< 4; i++) {
+     if(jogadores[i] < jogadores[i + 1]) {
+        menor = jogadores[i];
+        aux = criaRaiz(menor); 
+        criaNoEsq(menor, aux);
+        criaNoDir(jogadores[i+1], aux);
+     }
+
+     else if  (jogadores[i+1] < jogadores[i]){
+        menor = jogadores[i+1];
+        aux = criaRaiz(menor); 
+        criaNoEsq(menor, aux);
+        criaNoDir(jogadores[i], aux);
+     }
+     i++;
+
+    printf("%d\n", aux->dado);
+    printf("%d\n", aux->esq->dado);
+    printf("%d\n", aux->dir->dado);
+    printf("-------------------\n");
  }
 
-vencedor = arvore_de_vencedores(jogadores, folhas, 5);
-printf("Vencedor: %d\n", vencedor);
+aux = criaRaiz(jogadores[4]);
+printf("%d", aux->dado);
 
-} 
 
-int arvore_de_vencedores(int jogadores[], int folhas[], int n) {
+}
+/*int arvore_de_vencedores(int jogadores[], int folhas[], int n) {
 
     int l = 0;
     int vencedor[50];
@@ -76,7 +96,7 @@ int arvore_de_vencedores(int jogadores[], int folhas[], int n) {
 
     return folhas[0];
 
-}
+} */
 
 void gera_nome_particao(char *nome_atual) {
     nome_atual[18] = '0' + qtd_particoes;
