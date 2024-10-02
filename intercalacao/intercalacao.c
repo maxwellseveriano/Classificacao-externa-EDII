@@ -14,7 +14,7 @@ int qtd_particoes = 1;
 void gera_nome_particao(char *nome_atual);
 int arvore_de_vencedores(int jogadores[], int arvore[], int n);
 
-int main() {
+void main() {
 
     int vencedor = 0, menor = 0;
 
@@ -44,8 +44,19 @@ int main() {
         
     // }
 }
-}
 
+int tam = 5;
+
+heapSort(jogadores, tam);
+
+printf("Heap Ordenado: \n");
+
+for (int i = 0; i < tam; i++){
+    printf ("%d ", jogadores[i]);
+}
+printf("\n");
+
+}
 /*int arvore_de_vencedores(int jogadores[], int folhas[], int n) {
 
     int l = 0;
