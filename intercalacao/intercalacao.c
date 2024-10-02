@@ -9,67 +9,65 @@ typedef struct Cliente {
 } CLIENTE;
 
 
-int qtd_particoes = 1;
+int qtd_particoes = 5;
 
 void gera_nome_particao(char *nome_atual);
-int arvore_de_vencedores(int jogadores[], int arvore[], int n);
 
 int main() {
 
-    int vencedor = 0, menor = 0;
-
-    int jogadores[100], folhas[100];
+    int jogadores[5];
 
     CLIENTE *cliente = (CLIENTE *)malloc(sizeof(CLIENTE)) ;
     
     char f_nome[24] = "Particoes/particao0.bin";
+    FILE *arquivo_saida = fopen("saida.bin", "wb");
+    FILE *fp_particao[qtd_particoes];
+
+    if (arquivo_saida == NULL){
+        printf("Erro ao abrir o arquivo de saida \n");
+        return 1;
+    }
+
     for (int i = 0; i < 5; i++){
 
         gera_nome_particao(f_nome);
-        FILE *fp_particao = fopen(f_nome, "rb");
+        fp_particao[i] = fopen(f_nome, "rb");
 
         if(fp_particao == NULL) {
             exit(1);
     }
 
-    printf("Valores lido do arquivo %s: \n", f_nome);
-
-    fread(&jogadores[i], sizeof(int), 1, fp_particao);
-    fclose(fp_particao);
-
-
-    // while(fread(&cliente->codCliente, sizeof(int), 1, fp_particao)) {
-
-    //     printf("%d\n", cliente->codCliente);
-        
-    // }
-}
+    fread(&jogadores[i], sizeof(int), 1, fp_particao[i]);
 }
 
-/*int arvore_de_vencedores(int jogadores[], int folhas[], int n) {
+int tam = 5;
 
-    int l = 0;
-    int vencedor[50];
+heapSort(jogadores, tam);
 
-    for(int i = 0; i< n; i++) {
+while (tam > 0){
+    EscreverMenorElemento(jogadores, tam, arquivo_saida);
 
-        folhas[n + i] = jogadores[i];
-
+    int MenorIndice = 0;
+    for(int i = 1; i < tam; i++) {
+        if (jogadores[i] < jogadores[MenorIndice]){
+            MenorIndice = i;
+        }
     }
-    for(int j = 0; j < n; j++) { //Na arvore os jogadores estão ocupando o nó folha, então o for começa de n e vai té 2n. as posições de 5 a 9
 
-        folhas[j] = __INT_MAX__; //Inicializa um valor gigante nos outros nós para que eles nunca sejam maiores
+    if (fread(&jogadores[MenorIndice], sizeof(int), 1, fp_particao[MenorIndice]) == 0){
+        fclose(fp_particao[MenorIndice]);
+        for (int i = MenorIndice; i < tam -1; i++){
+            jogadores[i] = jogadores[i + 1];
+            fp_particao[i] = fp_particao[i + 1];
+        }
+        tam--;
     }
+    heapSort(jogadores,tam);
+}
 
-
-    for(int k = (2 * n) - 1; k > 0; k--) {
-        folhas[k-1] = (folhas[k] < folhas[k - 1] ? folhas[k] : folhas[k - 1]);
-    }
-    
-
-    return folhas[0];
-
-} */
+fclose(arquivo_saida);
+return 0;
+}
 
 void gera_nome_particao(char *nome_atual) {
     nome_atual[18] = '0' + qtd_particoes;

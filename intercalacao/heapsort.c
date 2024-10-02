@@ -36,3 +36,7 @@ void criaHeap(int *vet, int i, int finalVetor){
     vet[i] = aux;
 }
 
+void EscreverMenorElemento(int *vet, int tam, FILE *arquivo_saida) {
+    fwrite(&vet[0], sizeof(int), 1, arquivo_saida);
+}
+
