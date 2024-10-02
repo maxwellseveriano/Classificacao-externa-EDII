@@ -1,6 +1,6 @@
 #include <stdio.h>
-#include<stdlib.h>
-#include "arvore.h"
+#include <stdlib.h>
+#include "heapsort.h"
 
 typedef struct Cliente {
     int codCliente;
@@ -17,7 +17,6 @@ int arvore_de_vencedores(int jogadores[], int arvore[], int n);
 int main() {
 
     int vencedor = 0, menor = 0;
-    No *aux; 
 
     int jogadores[100], folhas[100];
 
@@ -45,34 +44,8 @@ int main() {
         
     // }
 }
-
- for(int i = 0; i< 4; i++) {
-     if(jogadores[i] < jogadores[i + 1]) {
-        menor = jogadores[i];
-        aux = criaRaiz(menor); 
-        criaNoEsq(menor, aux);
-        criaNoDir(jogadores[i+1], aux);
-     }
-
-     else if  (jogadores[i+1] < jogadores[i]){
-        menor = jogadores[i+1];
-        aux = criaRaiz(menor); 
-        criaNoEsq(menor, aux);
-        criaNoDir(jogadores[i], aux);
-     }
-     i++;
-
-    printf("%d\n", aux->dado);
-    printf("%d\n", aux->esq->dado);
-    printf("%d\n", aux->dir->dado);
-    printf("-------------------\n");
- }
-
-aux = criaRaiz(jogadores[4]);
-printf("%d", aux->dado);
-
-
 }
+
 /*int arvore_de_vencedores(int jogadores[], int folhas[], int n) {
 
     int l = 0;
