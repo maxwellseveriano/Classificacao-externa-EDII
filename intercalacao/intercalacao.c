@@ -37,46 +37,21 @@ int main() {
         NO nos = {leonardo, i};
         heapSort(&heap, nos);
     }
-}
+} 
 
-/*
-heapSort(jogadores, tam);
-
-while (tam > 0){
-    EscreverMenorElemento(jogadores, tam, arquivo_saida);
-
-    int MenorIndice = 0;
-    for(int i = 1; i < tam; i++) {
-        if (jogadores[i] < jogadores[MenorIndice]){
-            MenorIndice = i;
+    while (heap.tamanho > 0){
+        NO noMin = EscreverMenorElemento(&heap);
+        fwrite(&noMin.cliente, sizeof(CLIENTE), 1, arquivo_saida);
+        CLIENTE leticia;
+        if (fread(&leticia, sizeof (leticia), 1, fp_particao[noMin.indiceParticao]) >= 1){
+            NO no = {leticia, noMin.indiceParticao};
+            heapSort(&heap, no);
         }
     }
 
-    if (fread(&jogadores[MenorIndice], sizeof(int), 1, fp_particao[MenorIndice]) == 0){
-        fclose(fp_particao[MenorIndice]);
-        for (int i = MenorIndice; i < tam -1; i++){
-            jogadores[i] = jogadores[i + 1];
-            fp_particao[i] = fp_particao[i + 1];
-        }
-        tam--;
-    }
-    heapSort(jogadores,tam);
-}
-*/
-
-while (heap.tamanho > 0){
-    NO noMin = EscreverMenorElemento(&heap);
-    fwrite(&noMin.cliente, sizeof(CLIENTE), 1, arquivo_saida);
-    CLIENTE leticia;
-    if (fread(&leticia, sizeof (leticia), 1, fp_particao[noMin.indiceParticao]) >= 1){
-        NO no = {leticia, noMin.indiceParticao};
-        heapSort(&heap, no);
-    }
-}
-
-fechaArquivos(5, fp_particao);
-fclose(arquivo_saida);
-free(heap.nos);
+    fechaArquivos(5, fp_particao);
+    fclose(arquivo_saida);
+    free(heap.nos);
 
 return 0;
 }
