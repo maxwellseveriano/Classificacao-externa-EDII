@@ -21,7 +21,7 @@ void criaHeap(HEAP *heap, int i){
     if (filhoEsq < heap->tamanho && heap->nos[filhoEsq].cliente.CodigoCliente < heap->nos[menor].cliente.CodigoCliente){
         menor = filhoEsq;
     }
-    if (filhoDir < heap->tamanho && heap->nos[filhoEsq].cliente.CodigoCliente < heap->nos[menor].cliente.CodigoCliente){
+    if (filhoDir < heap->tamanho && heap->nos[filhoDir].cliente.CodigoCliente < heap->nos[menor].cliente.CodigoCliente){
         menor = filhoDir;
     }
     if (menor != i){

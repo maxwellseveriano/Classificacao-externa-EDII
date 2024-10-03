@@ -29,7 +29,8 @@ int main() {
         fp_particao[i] = fopen(f_nome, "rb");
         CLIENTE leonardo;
 
-        if(fp_particao == NULL) {
+        if(fp_particao[i] == NULL) {
+            printf("ERRO ao abrir particao %d\n", i);
             exit(1);
     }
 
