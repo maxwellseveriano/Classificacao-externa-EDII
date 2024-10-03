@@ -2,20 +2,11 @@
 #include <stdlib.h>
 #include "heapsort.h"
 
-typedef struct Cliente {
-    int codCliente;
-    char nome[50];
-    char data_nascimento[20];
-} CLIENTE;
-
-
 int qtd_particoes = 1;
 
 void gera_nome_particao(char *nome_atual);
 
 int main() {
-
-    int jogadores[5];
 
     CLIENTE *cliente = (CLIENTE *)malloc(sizeof(CLIENTE)) ;
     
@@ -28,20 +19,27 @@ int main() {
         return 1;
     }
 
+    HEAP heap;
+    heap.nos = (NO *) malloc(5 * sizeof(NO));
+    heap.tamanho = 0;
+
     for (int i = 0; i < 5; i++){
 
         gera_nome_particao(f_nome);
         fp_particao[i] = fopen(f_nome, "rb");
+        CLIENTE leonardo;
 
         if(fp_particao == NULL) {
             exit(1);
     }
 
-    fread(&jogadores[i], sizeof(int), 1, fp_particao[i]);
+    if (fread(&leonardo, sizeof(CLIENTE), 1, fp_particao[i]) >= 1){
+        NO nos = {leonardo, i};
+        heapSort(&heap, nos);
+    }
 }
 
-int tam = 5;
-
+/*
 heapSort(jogadores, tam);
 
 while (tam > 0){
@@ -64,8 +62,22 @@ while (tam > 0){
     }
     heapSort(jogadores,tam);
 }
+*/
 
+while (heap.tamanho > 0){
+    NO noMin = EscreverMenorElemento(&heap);
+    fwrite(&noMin.cliente, sizeof(CLIENTE), 1, arquivo_saida);
+    CLIENTE leticia;
+    if (fread(&leticia, sizeof (leticia), 1, fp_particao[noMin.indiceParticao]) >= 1){
+        NO no = {leticia, noMin.indiceParticao};
+        heapSort(&heap, no);
+    }
+}
+
+fechaArquivos(5, fp_particao);
 fclose(arquivo_saida);
+free(heap.nos);
+
 return 0;
 }
 

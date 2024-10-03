@@ -2,41 +2,54 @@
 #include<stdlib.h>
 #include "heapsort.h"
 
-void heapSort(int *vet, int tam){
-    int i, aux;
-    for (i = ((tam - 1) / 2); i >= 0; i--){
-        criaHeap(vet, i, tam - 1);
-    }
-    for (i = (tam - 1); i >= 1; i--){
-        aux = vet[0];
-        vet[0] = vet [i];
-        vet[i] = aux;
-        criaHeap(vet, 0, (i - 1));
+void heapSort(HEAP *heap, NO nos){
+    int i = heap->tamanho;
+    heap->tamanho++;
+    heap->nos[i] = nos;
+
+    while (i != 0 && heap->nos [(i - 1) / 2].cliente.CodigoCliente > heap->nos[i].cliente.CodigoCliente){
+        trocaNOS(&heap->nos[i], &heap->nos[(i - 1) / 2]);
+        i = (i - 1) / 2;
     }
 }
 
-void criaHeap(int *vet, int i, int finalVetor){
-    int aux = vet[i];
-    int filho = i * 2 + 1;
-    while (filho <= finalVetor){
-        if (filho < finalVetor){
-            if (vet[filho] < vet[filho + 1]){
-                filho = filho + 1;
-            }
-        }
-        if (aux < vet[filho]){
-            vet[i] = vet[filho];
-            i = filho;
-            filho = 2 * i + 1;
-        }
-        else{
-            filho = finalVetor + 1;
-        }
+void criaHeap(HEAP *heap, int i){
+    int filhoEsq = i * 2 + 1;
+    int filhoDir = i * 2 + 2;
+    int menor = i;
+    
+    if (filhoEsq < heap->tamanho && heap->nos[filhoEsq].cliente.CodigoCliente < heap->nos[menor].cliente.CodigoCliente){
+        menor = filhoEsq;
     }
-    vet[i] = aux;
+    if (filhoDir < heap->tamanho && heap->nos[filhoEsq].cliente.CodigoCliente < heap->nos[menor].cliente.CodigoCliente){
+        menor = filhoDir;
+    }
+    if (menor != i){
+        trocaNOS(&heap->nos[i], &heap->nos[menor]);
+        criaHeap(heap, menor);
+    }
 }
 
-void EscreverMenorElemento(int *vet, int tam, FILE *arquivo_saida) {
-    fwrite(&vet[0], sizeof(int), 1, arquivo_saida);
+NO EscreverMenorElemento(HEAP *heap) {
+    NO topo = heap->nos[0];
+    heap->nos[0] = heap->nos[heap->tamanho -1];
+    heap->tamanho--;
+    criaHeap(heap, 0);
+
+    return topo;
 }
+
+void trocaNOS(NO *heapA, NO *heapB){
+    NO aux;
+    aux = *heapA;
+    *heapA = *heapB;
+    *heapB = aux;
+}
+
+void fechaArquivos(int tamanhoArquivo, FILE *arquivos[]){
+    for (int i = 0; i < tamanhoArquivo ; i++) {
+    fclose(arquivos[i]);
+    }
+}
+
 
