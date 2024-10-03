@@ -9,7 +9,7 @@ typedef struct Cliente {
 } CLIENTE;
 
 
-int qtd_particoes = 5;
+int qtd_particoes = 1;
 
 void gera_nome_particao(char *nome_atual);
 
@@ -21,7 +21,7 @@ int main() {
     
     char f_nome[24] = "Particoes/particao0.bin";
     FILE *arquivo_saida = fopen("saida.bin", "wb");
-    FILE *fp_particao[qtd_particoes];
+    FILE *fp_particao[5];
 
     if (arquivo_saida == NULL){
         printf("Erro ao abrir o arquivo de saida \n");
