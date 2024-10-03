@@ -7,8 +7,6 @@ int qtd_particoes = 1;
 void gera_nome_particao(char *nome_atual);
 
 int main() {
-
-    CLIENTE *cliente = (CLIENTE *)malloc(sizeof(CLIENTE)) ;
     
     char f_nome[24] = "Particoes/particao0.bin";
     FILE *arquivo_saida = fopen("saida.bin", "wb");
@@ -23,23 +21,28 @@ int main() {
     heap.nos = (NO *) malloc(5 * sizeof(NO));
     heap.tamanho = 0;
 
+     printf("Imprimindo os primeiros clientes a serem ordenados na heap\n");
+     printf("===================================================================\n");
+
     for (int i = 0; i < 5; i++){
-        printf("OK \n");
+
         gera_nome_particao(f_nome);
         fp_particao[i] = fopen(f_nome, "rb");
-        CLIENTE leonardo;
-        printf("OKTWO ");
+        CLIENTE clientesIniciais;
+
         if(fp_particao[i] == NULL) {
             printf("ERRO ao abrir particao %d\n", i);
             exit(1);
     }
 
-        if (fread(&leonardo, sizeof(CLIENTE), 1, fp_particao[i]) <= 1){ 
-        printf("Lido Cliente: %d\n", leonardo.CodigoCliente); //debug
-        NO nos = {leonardo, i};
+       
+
+        if (fread(&clientesIniciais.CodigoCliente, sizeof(int), 1, fp_particao[i]) == 1){ 
+        printf("Lido Cliente: %d\n", clientesIniciais.CodigoCliente); 
+        NO nos = {clientesIniciais, i};
         heapSort(&heap, nos);
-        for (int i = 0; i < heap.tamanho; i++) { //debug
-        printf("Heap[%d]: %d\n", i, heap.nos[i].cliente.CodigoCliente); //debug
+        for (int i = 0; i < heap.tamanho; i++) { 
+        printf("Heap[%d]: %d\n", i, heap.nos[i].cliente.CodigoCliente); 
         }
         } else {
             if (feof(fp_particao[i])) {
@@ -50,19 +53,30 @@ int main() {
         }
     }
 
+     printf("===================================================================\n");
+
+
+    NO noMin;
+    noMin.indiceParticao = 1;
+
+    printf("Escrevendo os clientes no arquivo: saida.bin\n");
+    printf("===================================================================\n");
 
     while (heap.tamanho > 0){
-        NO noMin = EscreverMenorElemento(&heap);
-        fwrite(&noMin.cliente, sizeof(CLIENTE), 1, arquivo_saida);
-        printf("Escrevendo cliente no arquivo de saida: %d\n", noMin.cliente.CodigoCliente); // Debug
+        noMin = EscreverMenorElemento(&heap);
+        fwrite(&noMin.cliente.CodigoCliente, sizeof(int), 1, arquivo_saida);
+        printf("Escrevendo cliente no arquivo de saida: %d\n", noMin.cliente.CodigoCliente);
 
-        CLIENTE leticia;
-        if (fread(&leticia, sizeof (leticia), 1, fp_particao[noMin.indiceParticao]) >= 1){
-            printf("Lido Cliente: %d\n", leticia.CodigoCliente); //debug
-            NO no = {leticia, noMin.indiceParticao};
+
+        CLIENTE clientesParaOrdenar;
+        if (fread(&clientesParaOrdenar.CodigoCliente, sizeof (int), 1, fp_particao[noMin.indiceParticao]) == 1){
+            NO no = {clientesParaOrdenar, noMin.indiceParticao};
             heapSort(&heap, no);
+            
         }
     }
+
+      printf("===================================================================\n");
 
     fechaArquivos(5, fp_particao);
     fclose(arquivo_saida);
