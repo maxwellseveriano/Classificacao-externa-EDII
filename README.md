@@ -2,7 +2,7 @@
 
 ## Descrição
 
-Este projeto implementa um algoritmo de **classificação externa** utilizando a técnica de **seleção com substituição** e **intercalão pela árvore binária de verncedore**.
+Este projeto implementa um algoritmo de **classificação externa** utilizando a técnica de **seleção com substituição** e **intercalão pela árvore binária de verncedores**.
 
 ## Como Compilar e Executar
 
