@@ -19,5 +19,5 @@ make geracao_particoes
 ```
 Para executar apenas a intercalação de partições:
 ```bash
-make intercalacao-particao
+make intercalacao_particao
 ```
