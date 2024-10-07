@@ -18,6 +18,7 @@ void le_particoes_saida() {
     for (int i = 1; i <= qtd_particoes - 1; i++) {
         f_nome[18] = '0' + i;
         fp_particao = fopen(f_nome, "rb");
+        int cod;
 
         printf("Particao %d:\n", i);
         while (fread(&cod, sizeof(int), 1, fp_particao) > 0) {
@@ -160,7 +161,7 @@ void abre_nova_particao(FILE* fp_particao, char* nome) {
     fclose(fp_particao);
 
     gera_nome_particao(nome);
-    fp_particao = fopen(nome, "w+");
+    fp_particao = fopen(nome, "w+b");
 
     if (fp_particao == NULL) {
         printf("Falha ao criar uma particao\n");

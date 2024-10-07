@@ -11,17 +11,17 @@ typedef struct Cliente {
 } Cliente;
 
 // Imprime cliente
-void imprime(Cliente *func);
+void imprime(Cliente* func);
 
 // Cria cliente. Lembrar de usar free(cliente)
-Cliente *cliente(int cod, char *nome, char *data_nascimento);
+Cliente* cliente(int cod, char* nome, char* data_nascimento);
 
 // Salva cliente no arquivo out, na posicao atual do cursor
-void salva(Cliente *func, FILE *out);
+void salva(Cliente* func, FILE* out);
 
 // Le um cliente do arquivo in na posicao atual do cursor
 // Retorna um ponteiro para cliente lido do arquivo
-Cliente *le(FILE *in);
+Cliente* le(FILE* in);
 
 // Retorna tamanho do cliente em bytes
 int tamanho();
