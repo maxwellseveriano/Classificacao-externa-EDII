@@ -7,17 +7,19 @@
 typedef struct Cliente {
     int codCliente;
     char nome[50];
-    char data_nascimento[20];
+    int idade;
 } Cliente;
 
 // Imprime cliente
 void imprime(Cliente* func);
 
 // Cria cliente. Lembrar de usar free(cliente)
-Cliente* cliente(int cod, char* nome, char* data_nascimento);
+Cliente* cliente(int cod, char* nome, int idade);
 
 // Salva cliente no arquivo out, na posicao atual do cursor
 void salva(Cliente* func, FILE* out);
+
+void salvaIndexacao(Cliente* cliente, FILE* out);
 
 // Le um cliente do arquivo in na posicao atual do cursor
 // Retorna um ponteiro para cliente lido do arquivo
