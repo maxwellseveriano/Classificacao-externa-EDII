@@ -72,7 +72,10 @@ FILE* geraArquivoIndice(FILE* in, char* nomeArq) {
     }
 
     fwrite(&primeiroCliente, sizeof(ClienteIndex), 1, A6);
-
+    printf("ARQUIVO DE INDICES\n");
+    printf("----------------------------\n");
+    printf("IDADE\tPROX\tQUANTIDADE\n");
+    printf("----------------------------\n");
     for (int i = 1; i <= QTD_CLIENTES; i++) {
         if (i < QTD_CLIENTES) fread(&novoCliente, sizeof(ClienteIndex), 1, in);
 
@@ -80,6 +83,7 @@ FILE* geraArquivoIndice(FILE* in, char* nomeArq) {
             fwrite(&primeiroCliente.idade, sizeof(int), 1, A5);
             fwrite(&primeiroCliente.EndDisc, sizeof(int), 1, A5);
             fwrite(&total, sizeof(int), 1, A5);
+            printf("%d\t%d\t%d\n", primeiroCliente.idade, primeiroCliente.EndDisc, total);
 
             primeiroCliente = novoCliente;
             total = 1;
@@ -92,6 +96,7 @@ FILE* geraArquivoIndice(FILE* in, char* nomeArq) {
         fwrite(&prox, sizeof(int), 1, A6);
         if (i < QTD_CLIENTES) fwrite(&novoCliente, sizeof(ClienteIndex), 1, A6);
     }
+    printf("\n");
     return A6;
 }
 
@@ -154,10 +159,15 @@ FILE* geraArqFinal(FILE* fp1, FILE* fp2, char* nomeArq) {
 
         free(clienteA1);
     }rewind(out);
+
+    printf("ARQUIVO FINAL DE DADOS\n");
+    printf("-------------------------------------------------------\n");
+    printf("%-10s %-20s %-10s %-15s\n", "COD", "NOME", "IDADE", "PROX_IDADE");
+    printf("-------------------------------------------------------\n");
     while ((clienteA1 = le(out)) != NULL) {
         fread(&prox, sizeof(int), 1, out);
 
-        printf("%d %s %d %d\n", clienteA1->codCliente, clienteA1->nome, clienteA1->idade, prox);
+        printf("%-10d %-20s %-10d %-10d\n", clienteA1->codCliente, clienteA1->nome, clienteA1->idade, prox);
         free(clienteA1);
     }
     return out;

@@ -6,8 +6,6 @@
 #define QTD_CLIENTES 50
 
 void insere_clientes(FILE* out) {
-    printf("Inserindo %d clientes no arquivo...\n", QTD_CLIENTES);
-
     Cliente* clientes[QTD_CLIENTES];
 
     char* nomes[50] = {
